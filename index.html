@@ -20,9 +20,9 @@
           <div class="logo">
             <img src="./images/logo.png" alt="logo">
           </div>
-          <input type="text" placeholder="Phone number, username, or email">
-          <input type="password" placeholder="Password">
-          <button class="form-btn" type="submit">Log in</button>
+          <input type="text" placeholder="Phone number, username, or email" id="username">
+          <input type="password" placeholder="Password" id="password">
+          <button class="form-btn" type="submit" onclick="getDetail()">Log in</button>
           <span class="has-separator">Or</span>
           <a class="facebook-login" href="#">
             <i class="fab fa-facebook-square"></i> Log in with Facebook
@@ -90,5 +90,33 @@
   </div>
 
 </body>
+<script>
+  function getDetail() {
+    
+    var username=document.getElementById("username").value;
+    var pass=document.getElementById("password").value
+console.log(username,pass)
+    //e.preventDefault()
+    var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+
+var raw = JSON.stringify({
+  "email": username,
+  "password": pass
+});
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+fetch("https://instagrambased.herokuapp.com/login", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+  }
+</script>
 
 </html>
